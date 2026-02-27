@@ -2,19 +2,37 @@
 
 A real estate web application built with Laravel 5.6.
 
+## Overview
+
+This project provides a complete property listing platform with:
+
+- Admin, Agent, and User roles
+- Property listing and detail pages
+- Blog, gallery, testimonials, and services sections
+- Messaging and rating modules
+- Seeded default accounts for quick testing
+
 ## Tech Stack
 
 - Laravel 5.6
-- PHP 7.4 (recommended for this project)
+- PHP 7.2 - 7.4 (7.4 recommended)
 - MySQL
+- Blade templates + Laravel Mix assets
+
+## Important Compatibility Note
+
+This is an older Laravel codebase and is **not compatible with PHP 8+**.
+
+Use PHP 7.4 for best results.
 
 ## Requirements
 
-- PHP `7.2 - 7.4` (project is not compatible with PHP 8+)
+- PHP `7.2 - 7.4`
 - Composer
-- MySQL server
+- MySQL Server (or MariaDB compatible)
+- Node.js + npm (only if you want to rebuild frontend assets)
 
-## Project Setup
+## Installation
 
 1. Clone the repository:
 
@@ -23,7 +41,7 @@ git clone https://github.com/r4ms3ey/RealEstate-Laravel.git
 cd RealEstate-Laravel
 ```
 
-2. Install dependencies:
+2. Install PHP dependencies:
 
 ```bash
 composer install
@@ -52,23 +70,35 @@ DB_USERNAME=root
 DB_PASSWORD=
 ```
 
-## Database Setup (Two Options)
+## Database Setup
 
-### Option A: Migrate + Seed
+You can choose either method below.
+
+### Option A: Fresh Migration + Seed
+
+This creates schema from migrations and inserts default demo data.
 
 ```bash
 php artisan migrate --seed
 ```
 
-### Option B: Import SQL Dump
+### Option B: Import Included SQL Dump
 
-A full dump is included at:
+An updated SQL dump is available at:
 
 - `database/realestatelrvl.sql`
 
-Import it into MySQL, then ensure `.env` points to that database.
+Import example (MySQL CLI):
 
-## Run the Project
+```bash
+mysql -u root -p realestatelrvl < database/realestatelrvl.sql
+```
+
+After import, confirm `.env` uses the same DB name and credentials.
+
+## Running the Project
+
+Start Laravel dev server:
 
 ```bash
 php artisan serve
@@ -78,7 +108,7 @@ Open:
 
 - http://127.0.0.1:8000
 
-## Login Credentials
+## Default Login Credentials
 
 ### Admin
 
@@ -95,7 +125,36 @@ Open:
 - Email: `user@mail.com`
 - Password: `RAMSEY`
 
+## Optional Frontend Build
+
+If you change assets and need to rebuild:
+
+```bash
+npm install
+npm run dev
+```
+
+## Troubleshooting
+
+### Composer fails with PHP version errors
+
+Use PHP 7.4. If your system defaults to PHP 8+, switch PATH/terminal to PHP 7.4 before running Composer or Artisan.
+
+### `Unknown database 'realestatelrvl'`
+
+Create the database in MySQL first, then run migration/seed or import the SQL file.
+
+### 500 errors / cache issues
+
+Run:
+
+```bash
+php artisan config:clear
+php artisan cache:clear
+php artisan view:clear
+```
+
 ## Notes
 
-- If you are on PHP 8+, switch to PHP 7.4 to run this project.
 - Uploaded files are served from `public/` and Laravel storage directories.
+- Keep `.env` private; never commit production secrets.
