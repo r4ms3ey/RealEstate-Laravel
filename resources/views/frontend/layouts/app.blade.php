@@ -75,6 +75,10 @@
                 indicators: true,
             });
 
+            setInterval(function() {
+                $('.carousel.carousel-slider').carousel('next');
+            }, 15000);
+
             $('.carousel.testimonials').carousel({
                 indicators: true,
             });
